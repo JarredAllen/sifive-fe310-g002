@@ -34,6 +34,9 @@ pub struct SpiControls {
     pub ie: u32,
     pub ip: u32,
 }
+/// Pointer to the QSPI0 address
 pub const QSPI0: *mut SpiControls = 0x10014000 as *mut SpiControls;
+/// Pointer to the SPI1 address
 pub const SPI1: *mut SpiControls = 0x10024000 as *mut SpiControls;
+/// Pointer to the SPI2 address
 pub const SPI2: *mut SpiControls = 0x10034000 as *mut SpiControls;

@@ -20,4 +20,5 @@ pub struct GpioControls {
     pub out_xor: u32,
 }
 
+/// Pointer to the GPIO address
 pub const GPIO: *mut GpioControls = 0x1001_2000 as *mut GpioControls;
