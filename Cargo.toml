@@ -1,12 +1,13 @@
 [package]
 name = "sifive-fe310-g002"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Jarred Allen <jarredallen73@gmail.com>"]
 description = "Interface for peripherals on the SiFive FE310-G002 cpu"
 license = "MIT OR Apache-2.0"
 categories = ["embedded", "hardware-support"]
 keywords = ["riscv", "peripherals", "bare-metal"]
 repository = "https://github.com/JarredAllen/sifive-fe310-g002"
+documentation = "https://docs.rs/sifive-fe310-g002/latest/sifive_fe310_g002/"
 readme = "README.md"
 edition = "2021"
 
