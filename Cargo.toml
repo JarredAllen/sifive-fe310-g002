@@ -6,6 +6,8 @@ description = "Interface for peripherals on the SiFive FE310-G002 cpu"
 license = "MIT OR Apache-2.0"
 categories = ["embedded", "hardware-support"]
 keywords = ["riscv", "peripherals", "bare-metal"]
+repository = "https://github.com/JarredAllen/sifive-fe310-g002"
+readme = "README.md"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
