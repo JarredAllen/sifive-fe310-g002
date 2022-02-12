@@ -16,3 +16,4 @@ edition = "2021"
 [dependencies]
 riscv = "0.7"
 bare-metal = "1.0"
+bit_field = "0.10"
