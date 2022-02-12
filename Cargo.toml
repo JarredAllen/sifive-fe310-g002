@@ -1,6 +1,6 @@
 [package]
 name = "sifive-fe310-g002"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Jarred Allen <jarredallen73@gmail.com>"]
 description = "Interface for peripherals on the SiFive FE310-G002 cpu"
 license = "MIT OR Apache-2.0"
