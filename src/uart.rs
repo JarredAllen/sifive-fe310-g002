@@ -8,7 +8,10 @@ use core::ptr::read_volatile;
 ///
 /// Each field matches the definitions in the core specification. They are exposed so that the end
 /// user can work with them. However, if the behavior you want is covered by the methods provided
-/// for this class, you should use those
+/// for this class, you should use those.
+///
+/// Also note that UartControls should only be used by the two pointers provided by this module,
+/// [UART0] and [UART1].
 pub struct UartControls {
     pub txdata: u32,
     pub rxdata: u32,
@@ -17,6 +20,7 @@ pub struct UartControls {
     pub ie: u32,
     pub ip: u32,
     pub div: u32,
+    phantom: (),
 }
 
 macro_rules! bit_write {
@@ -59,7 +63,7 @@ impl UartControls {
     }
 
     #[inline]
-    // Set the baud rate divisor to the specified value
+    /// Set the baud rate divisor to the specified value
     pub fn set_baud_rate_divisor(uart: *mut UartControls, value: u16) {
         unsafe {
             (*uart).div.set_bits(0..16, value as u32);

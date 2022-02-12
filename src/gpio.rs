@@ -2,6 +2,8 @@
 /// The GPIO controls on the core
 ///
 /// Each field matches the definitions in the core specification
+///
+/// Also note that GpioControls should only be used by the pointer provided by this module, [GPIO].
 pub struct GpioControls {
     pub input_val: u32,
     pub input_en: u32,
