@@ -1,7 +1,7 @@
 #![allow(clippy::not_unsafe_ptr_arg_deref)]
 
 use bit_field::BitField;
-use core::ptr::read_volatile;
+use core::{arch::asm, ptr::read_volatile};
 
 #[repr(C)]
 /// The UART controls on the core
@@ -62,6 +62,27 @@ impl UartControls {
         }
     }
 
+    /// Attempt to transmit a byte, returning `Some(())` if it was successfully written, and `None`
+    /// if there is no more space in the transmit queue.
+    #[inline]
+    pub fn poll_write_byte(uart: *const UartControls, byte: u8) -> Option<()> {
+        let temp: usize = byte as usize;
+        let mut result: usize;
+        let address: *const u32 = unsafe { &(*uart).txdata };
+        unsafe {
+            // Atomically read `txdata` into `result` and write the byte back into it
+            asm!("amoor.w {0} {1} {2}",
+                 lateout(reg) result,
+                 in(reg) address,
+                 in(reg) temp);
+        }
+        if result == 0 {
+            Some(())
+        } else {
+            None
+        }
+    }
+
     #[inline]
     /// Set the baud rate divisor to the specified value
     pub fn set_baud_rate_divisor(uart: *mut UartControls, value: u16) {
@@ -106,28 +127,28 @@ impl UartControls {
     (
         #[doc = "Enable interrupts for the receive queue length going above the watermark."],
         receive_enable_interrupts,
-        rxctl,
-        0,
+        ip,
+        1,
         true
     ),
     (
         #[doc = "Disable interrupts for the receive queue length going above the watermark."],
         receive_disable_interrupts,
-        rxctl,
-        0,
+        ip,
+        1,
         false
     ),
     (
         #[doc = "Enable interrupts for the transmit queue length going below the watermark."],
         transmit_enable_interrupts,
-        txctl,
+        ip,
         0,
         true
     ),
     (
         #[doc = "Disable interrupts for the transmit queue length going below the watermark."],
         transmit_disable_interrupts,
-        txctl,
+        ip,
         0,
         false
     ),
@@ -136,6 +157,34 @@ impl UartControls {
         set_num_stop_bits,
         txctl,
         1,
+        false
+    ),
+    (
+        #[doc = "Enable receiving data from this UART."],
+        receive_enable,
+        rxctl,
+        0,
+        true
+    ),
+    (
+        #[doc = "Disable receiving data from this UART."],
+        receive_disable,
+        rxctl,
+        0,
+        false
+    ),
+    (
+        #[doc = "Enable transmitting data from this UART."],
+        transmit_enable,
+        txctl,
+        0,
+        true
+    ),
+    (
+        #[doc = "Disable transmitting data from this UART."],
+        transmit_disable,
+        txctl,
+        0,
         false
     )
     );
