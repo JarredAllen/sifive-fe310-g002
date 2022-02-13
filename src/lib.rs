@@ -4,6 +4,8 @@
 /// Re-export RISC-V intrinsics because they'll be useful
 pub use riscv;
 
+/// Bindings for interacting with CLINT (Core-Local INterrupt Controller)
+pub mod clint;
 /// Bindings for interacting with the GPIO controller
 pub mod gpio;
 /// Bindings for interacting with the SPI controllers
