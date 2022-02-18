@@ -35,7 +35,7 @@ impl ClintControls {
     /// mtime register into a known state such that you know how long it will be until the
     /// interrupt activates.
     #[inline]
-    pub fn set_mtimecomp(clint: *mut ClintControls, target: u32) {
+    pub fn set_mtimecmp(clint: *mut ClintControls, target: u32) {
         unsafe { (*clint).mtimecmp = target };
     }
 }
